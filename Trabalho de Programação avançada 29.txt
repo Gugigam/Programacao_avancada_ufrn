@@ -529,8 +529,8 @@ Questao 23:
   Portanto apenas a I está correta;
 ---------------------------
 Questao 24:
-  <resposta da questao 1>
+  <resposta da questao 1>(não fiz);
 ---------------------------
 Questao 25:
-  <resposta da questao 2>
+  <resposta da questao 2>(não fiz);
 ---------------------------
