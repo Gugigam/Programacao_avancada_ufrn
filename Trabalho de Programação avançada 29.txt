@@ -1,0 +1,536 @@
+Nome: <Gustavo Quezado Gurgel Magalhães>
+Matricula: <20220022450>
+Questao 1:
+  °◦ p == &i é verdadeiro, pois p guarda o endereço de i, e &i é literalmente o endereço de i, logo são iguais;
+  ° *p - *q = -2. Já que *p é o valor guardado no endereço i e *q o valor guardado no endereço j, respectivamente 3 e 5, e 3-5=-2;
+  ° **&p = 3. Afinal, o valor guardado(do valor guardado no endereço de p) é o mesmo que o valor guardado em p, ou seja, **&p = *p, e p guarda o endereço de i, que vale 3;
+  ° 3 - *p/(*q) + 7 = 10. justificativa: 3 - (3/5) + 7 é a conversão direta, mas estamos tratando de ponteiros que guardam numeros inteiros, então a divisao não vai guardar os pontos flutuantes, oq torna a formula: 3 - 0 + 7 = 10.
+---------------------------
+Questao 2:
+   p = 4094 (assim como a questão falou);
+   p+1 = 4096 (ja que o inteiro oculpa 2 bytes de tamanho, diferente do caso normal onde ele ocuparia 4);
+   *p+2 = 7 (ja que *p é o valor de i que é 5);
+   **&p = 5 (como dito antes, **&p = *p);
+   3**p = 15 (normalmente 3**x seria 3 elevado a x, porem nesse caso o 2° '*' é do ponteiro);
+   **&p+4 = 9 (**&P+4 = *P+4 = 5+4);
+---------------------------
+Questao 3:
+  p = &i; (não há problemas);
+  *q = &j; (vai gerar um problema, pois o valor de j vai tentar armazenar o endereço de j, e ambos não sao iguais alem de o valor de j não ser uma variavel);
+  p = &*&i; (não há problemas);
+  i = (*&)j; (apesar de um '*' anular um '&', eles não podem ser separados do j por prioridade, ou seja, j deveria estar junto a eles dentro do parenteses, ilegal);
+  i = *&j; (não há problemas);
+  i = *&*&j; (não há problemas);
+  q = *p; (existe um problema, pois 'q' deve armazenar um endereço e ele vai armazenar um valor);
+  i = (*p)++ + *q; (não há problemas);
+---------------------------
+Questao 4:
+  letra A
+    RESULTADO: 20(esperado)
+    justificativa: ao salvar o endereço em um ponteiro, as modificações são feitas diretamente na variável original;
+letra B
+    RESULTADO: 29.0(esperado)
+    justificativa: a mesma justificativa da letra A, porem dessa vez aplicada para float;
+letra C
+    RESULTADO: "P"(esperado)
+    justificativa: o p3 armazenou o endereço do 1° slot da lista "nome", então *p3 vai representar esse mesmo valor;
+letra D
+    RESULTADO: "e"(esperado)
+    justificativa: como explicado na questao anterior: p3 armazenou o endereço de nomes[4], então *p3 vai representar esse mesmo valor;
+letra E
+    RESULTADO: "P"(esperado)
+    justificativa: quando um ponteiro guarda uma lista, ela é armazenada de forma com que *(p3+i) represente nome[i], sendo p3+i=p3, i=0;
+letra F
+    RESULTADO: "e"(esperado)
+    justificativa: como explicado na questao anterior: *(p3+4)=nome[4] que é o 5° slot, ou seja p-o-n-t-[e]-i-r-o;
+letra G
+    RESULTADO: "t"(esperado)
+    justificativa: p3 possuia o endereço de nome[4], com o decremento de 1 (p3--), p3 vai armazenar o endereço do nome[4-1], ou seja, nome[3];
+letra H
+    RESULTADO: 31(esperado)
+    justificativa: a situação é quase a mesma da anterior. p4 armazena o endereço do primeiro slot do array "vetor", ou seja, *p4 = vetor[0];
+letra I
+    RESULTADO: 45(esperado)
+    justificativa: da mesma forma que na anterior, se *(p4+i) = vetor[i], então se p5 é p4+1, *(p5)=*(p4+1)=vetor[1];
+letra J
+    RESULTADO: 27(esperado)
+    justificativa: a unica diferença da anterior é que p4 ja possui um valor, porem se esse valor for substituido por outro endereço o primeior é descartado em prol do novo, como foi o caso;
+letra L
+    RESULTADO: 31(esperado)
+    justificativa: assim como na letra J, p4 é substituido por um outro endereço, tudo resumido em: *p4 = *(p5+1)=*((p4+1)+1)=vetor[2], se o novo p4 é subtraido de 2, entao *(((p4+1)+1)-2) = *(p4=0) = vetor[0], ou seja, o endereço pode ser subtraido tambem;
+letra M
+    RESULTADO: 45(esperado)
+    justificativa: se px = &vetor[2], *(px-1) = &vetor[2] - 1 = &vetor[1];
+letra N
+    RESULTADO: 27(esperado)
+    justificativa: p5 = endereço de vetor[1], o encremento de um endereço de valor de lista é vetor[x+1], logo, vetor[1+1]=vetor[2]=27;
+---------------------------
+Questao 5:
+  foi imprimido:
+    "contador/valor/valor/endereco/endereco
+    i = 0 vet[0] = 1.1 *(f + 0) = 1.1 &vet[0] = E623C240 (f + 0) = E623C240
+    i = 1 vet[1] = 2.2 *(f + 1) = 2.2 &vet[1] = E623C244 (f + 1) = E623C244
+    i = 2 vet[2] = 3.3 *(f + 2) = 3.3 &vet[2] = E623C248 (f + 2) = E623C248
+    i = 3 vet[3] = 4.4 *(f + 3) = 4.4 &vet[3] = E623C24C (f + 3) = E623C24C
+    i = 4 vet[4] = 5.5 *(f + 4) = 5.5 &vet[4] = E623C250 (f + 4) = E623C250"
+  explicação:
+    a primeira linha é um print de literal, que serve so para explicar o que vem depois;
+    a segunda linha em diante segue um formato mostrando:
+      -i (um contador que serve para mostrar o numero de repetiçoes ja feitas no laço for alem de tambem servir de indice para o array "vet";
+      -vet[i] (o valor atual que esta sendo considerado no array float);
+      -f+i (corresponde ao vet[i] que está sendo mostrado, ja que o array é semelhante a um ponteiro que aponta para seus valores, o f é um ponteiro que aposta para os endereços dos valores de vet);
+      -&vet[i] (o endereço de vet[i]);
+      -&(f+1) (o endereço dos valores de vet[i] que são os mesmos pois o ponteiro esta direcionado a eles e não apenas fazendo uma cópia);
+---------------------------
+Questao 6:
+  a resposta certa é *(pulo + 2), pois o vetor não pode ser incrementado, mas o seu indice pode, e tornando ele um ponteiro isso épossivel no formato mostrado;
+---------------------------
+Questao 7:
+  p = mat + 1; (funciona, apenas pula 4 no endereço, ou seja, vai para o próximo índice);
+  p = mat; (funciona, ambos guardam o mesmo endereço);
+  p = mat; (igual ao anterior);
+  x = (*mat); (funciona, porem, diferente de todos os outros, ele não vai mostrar o endereço, mas sim o valor armazenado no primeiro byte da matriz);
+---------------------------
+Questao 8:
+  O primeiro programa cria um vetor de tamanho 3 ja contendo seus valores em decimais, e depois ele cria um for para imprimir cada um desses valores tambem em decimais, um por repetição, usando o ponteiro mostrando que o array se equivale a um ponteiro para cada um de seus itens a partir do seu indice;
+  Já o segundo programa, ele cria o mesmo que o anterior porem no laço de repetição for ele tenta imprimir os endereços de cada valor como hexadecimal com letras maiusculas, saindo os endereços com a soma de 4;
+---------------------------
+Questao 9:
+  Não haverá saída, pois há vários erros no código. Aqui está o código corrigido:
+#include <stdio.h>
+
+struct teste{
+  int x;
+  char nome[30];
+};
+
+int main(){
+  struct teste *s, test;
+  s = &test;
+  s->x = 3;
+  s->nome[0] = 'J';
+  s->nome[1] = 'o';
+  s->nome[2] = 's';
+  s->nome[3] = 'e';
+  s->nome[4] = '\0';
+   
+  printf("%d\n", s->x);
+  printf("%s", s->nome);
+
+  return 0;
+}
+---------------------------
+Questao 10:
+  Não é possivel modificar uma variavel de apenas leitura;
+---------------------------
+Questao 11:
+  Se x for declarado Char:
+  (x+1) = 4093, (x+2) = 4094, (x+3) = 4095;
+  Se x for declarado Int:
+  (x+1) = 4094, (x+2) = 4096, (x+3) = 4098;
+  Se x for declarado Float:
+  (x+1) = 4096, (x+2) = 4100, (x+3) = 4104;
+  Se x for declarado Doble:
+  (x+1) = 4100, (x+2) = 4108, (x+3) = 4116;
+---------------------------
+Questao 12:
+  aloha[2] = value (Válido);
+  scanf("%f", &aloha) (Válido);
+  aloha = "value" (Inválido, pois aloha é um array);
+  printf("%f", aloha); (Válido - porem pega apenas o 1° valor);
+  coisas[4][4] = aloha[3]; (Válido);
+  coisas[5] = aloha (Invalido, o valor de coisas 5 ja tem um endereço armazenado de um tamanho delimitado, não é possivel mudar para aloha);
+  pf = value (Invalido, pois o ponteiro aponta para um endereço e não para um valor);
+  pf = aloha (Válido);
+---------------------------
+Questao 13:
+  Leak memory é um vazamento dememoria, toda vez que se reserva um espaço da memoria, ao fim de seu uso essa memoria precisa ser liberada, porem quando isso não ocorre ou o endereço se perde antes de ser liberada, essa memoria vai ocupar o espaço indeterminadamente.
+
+  ex1:
+
+  int main(){
+    int *x, i;
+    x = malloc(40);
+    return 0;
+  }
+  (nesse caso x ocupa um espaço que nao foi liberado, após uso deveria ter o (free(x));
+  
+  ex2:
+  
+  int mains(){
+  int **x;
+  x = malloc(2*sizeof(int*));
+  x[0] = malloc(2*4*sizeof(int*));
+  x[1] = z[0]+4;
+  free(x);
+  }
+  (nesse caso foi liberado o espaço armazenado para x mas não para x[0], ou seja, a matriz n armazea mais, porem seus valores contidos nos indices ainda possuem o espaço);
+
+  ex3:
+
+  int mains(){
+  int **x;
+  x = malloc(2*sizeof(int*));
+  x[0] = malloc(2*4*sizeof(int*));
+  x[1] = z[0]+4;
+  free(x);
+  free(x[0]);
+  }
+  (nesse terceiro caso o free foi feito na matriz, e ela perdeu seus endereços, entao x[0] já não aponta para nada, entao x[0] não existe mas seu espaço ainda esta reservado;
+---------------------------
+Questao 14:
+  o ponteiro para uma função armazena o endereço da função podendo aplicála de forma pratica em outros locais como no main, dessa forma o proprio ponteiro pode executar a função. Por exemplo:
+  
+  int soma(int a, int b){
+    y = a + b;
+    retuns y;
+  }
+  int main(){
+    int (*ps) (int, int) = soma;
+    printf("o valor da soma de 4 com 18 é %d", ps(4, 18));
+
+  explicando o codigo acima: inicialmente ele cria uma função chamada soma que retorna um inteiro enquanto recebe 2 inteiros. ele usa uma variavel local "y" que soma a e b e depois a retorna. já na função int, é criado um ponteiro para a função que vai retornar um inteiro recebendo 2 inteiros, e direciona a função soma. após isso, o main imprime o valor da soma 4 com 18 utilizando o ponteiro apra a função;
+
+---------------------------
+Questao 15:
+#include <stdio.h>
+#include <stdlib.h>
+
+int create_vector(float **vector, int n);
+int get_vector(float **vector, int n);
+void show_vector(float *vector, int n);
+int sort_vector(float **vector, int n);
+int free_vector(float *vector);
+
+int main(){
+    int n;
+    float *vector = NULL;
+
+    printf("Forneça o número de elementos: ");
+    scanf("%d", &n);
+
+    create_vector(&vector, n);
+    get_vector(&vector, n);
+
+    printf("\nVetor Desordenado: ");
+    show_vector(vector, n);
+
+    sort_vector(&vector, n);
+
+    printf("\nVetor Ordenado: ");
+    show_vector(vector, n);
+
+    return 0;
+}
+
+int create_vector(float **vector, int n){
+    *vector = (float *) malloc(n * sizeof(float));
+
+    if(*vector == NULL){
+        return -1;
+    }
+    return 0;
+}
+
+int get_vector(float **vector, int n){
+    for(int i = 0; i < n; i++){
+        scanf("%f", &(*vector)[i]);
+    }
+
+    return 0;
+}
+
+void show_vector(float *vector, int n){
+    for(int i = 0; i < n; i++){
+        printf("%.2f ", vector[i]);
+    }
+}
+
+int sort_vector(float **vector, int n){
+    for(int i = 1; i < n; i++){
+        if((*vector)[i-1] > (*vector)[i]){
+            float temp = (*vector)[i-1];
+            (*vector)[i-1] = (*vector)[i];
+            (*vector)[i] = temp;
+            i = 0;
+        }
+    }
+
+    return 0;
+}
+
+int free_vector(float *vector){
+    if(vector == NULL){
+        return -1;
+    }
+
+    free(vector);
+    return 0;
+}
+---------------------------
+Questao 16:
+#include <stdio.h>
+#include <stdlib.h>
+
+//Um amigo disse que são boas praticas colocar aqui as funçoes, para uma melhor visão
+int create_vector(float **vector, int n);
+int get_vector(float **vector, int n);
+void show_vector(float *vector, int n);
+int free_vector(float *vector);
+int compare_float(const void *a, const void *b);
+
+//O int executa o main, criando o vetor, separando os valores para colocar no vetor, e ordenando ele a partir das funçoes
+int main(){
+    int n;
+    float *vector = NULL;
+
+    printf("Forneça o número de elementos: ");
+    scanf("%d", &n);
+
+    create_vector(&vector, n);
+    get_vector(&vector, n);
+
+    printf("\nVetor Desordenado: ");
+    show_vector(vector, n);
+
+    qsort(vector, n, sizeof(float), compare_float);
+
+    printf("\nVetor Ordenado: ");
+    show_vector(vector, n);
+
+    return 0;
+}
+
+//cria o vetor
+int create_vector(float **vector, int n){
+    *vector = (float *) malloc(n * sizeof(float));
+
+    if(*vector == NULL){
+        return -1;
+    }
+    return 0;
+}
+
+//bota valor no vetor
+int get_vector(float **vector, int n){
+    for(int i = 0; i < n; i++){
+        scanf("%f", &(*vector)[i]);
+    }
+
+    return 0;
+}
+
+//mostrar vetor pra conferir
+void show_vector(float *vector, int n){
+    for(int i = 0; i < n; i++){
+        printf("%.2f ", vector[i]);
+    }
+}
+
+//libera o endereço do vetor
+int free_vector(float *vector){
+    if(vector == NULL){
+        return -1;
+    }
+
+    free(vector);
+    return 0;
+}
+
+//define se a ordem dos vetores é correta ou n a partir de saber se os valores a e b sao crescentes ou n
+int compare_float(const void *a, const void *b) {
+    float fa = *(const float *)a;
+    float fb = *(const float *)b;
+    return (fa > fb) - (fa < fb);
+}
+---------------------------
+Questao 17:
+  #include <stdio.h>
+#include <stdlib.h>
+
+typedef int (*Comparador)(const void*, const void*);
+
+int compararInteiros(const void* a, const void* b) {
+    int int_a = *((int*)a);
+    int int_b = *((int*)b);
+    return int_a - int_b;
+}
+
+int compararInteirosDesc(const void* a, const void* b) {
+    int int_a = *((int*)a);
+    int int_b = *((int*)b);
+    return int_b - int_a;
+}
+
+void ordenarInteiros(int* array, size_t tamanho, Comparador comparador) {
+    qsort(array, tamanho, sizeof(int), comparador);
+}
+
+int create_vector(int **vector, int n){
+    *vector = (int *) malloc(n * sizeof(int));
+
+    if(*vector == NULL){
+        return -1;
+    }
+    return 0;
+}
+
+int get_vector(int **vector, int n){
+    for(int i = 0; i < n; i++){
+        scanf("%d", &(*vector)[i]);
+    }
+
+    return 0;
+}
+
+void show_vector(int *vector, int n){
+    for(int i = 0; i < n; i++){
+        printf("%d ", vector[i]);
+    }
+}
+
+
+int main() {
+    int n;
+    int *vector = NULL;
+
+    printf("Forneça o número de elementos: ");
+    scanf("%d", &n);
+    
+    create_vector(&vector, n);
+    get_vector(&vector, n);
+
+    printf("Array inicial: ");
+    for (size_t i = 0; i < n; i++) {
+        printf("%d ", vector[i]);
+    }
+    printf("\n");
+    ordenarInteiros(vector, n, compararInteiros);
+    printf("array crescentes: ");
+    for (size_t i = 0; i < n; i++) {
+        printf("%d ", vector[i]);
+    }
+    printf("\n");
+    ordenarInteiros(vector, n, compararInteirosDesc);
+    printf("array decrescente: ");
+    for (size_t i = 0; i < n; i++) {
+        printf("%d ", vector[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+---------------------------
+Questao 18:
+  <resposta da questao 2> (não fiz);
+---------------------------
+Questao 19:
+#include <stdio.h>
+#include <stdlib.h>
+
+int soma_vetores(int* vet_a, int* vet_b, int* resultado, int n);
+
+int main(){
+    int n, i;
+    printf("digite o tamanho dos 2 vetores.\n");
+    scanf("%d", &n);
+    printf("n = %d \n", n);
+    
+    int vet_a[n], vet_b[n], resultados[n];
+    
+    printf("diga os numeros do primeiro vetor\n");
+    for (i = 0; i < n; i++){
+        printf("vet_a[%d] = ", i);
+        scanf("%d", &vet_a[i]);
+    }
+    
+    printf("diga os numero do segundo vetor\n");
+    for (i=0; i<n; i++){
+        printf("vet_b[%d] = ", i);
+        scanf("%d", &vet_b[i]);
+    }
+    
+    soma_vetores(vet_a, vet_b, resultados, n);
+    printf("soma dos 2 vetores de tamanho n:\n");
+    for (i = 0; i < n; i++){
+        printf("%d, ", resultados[i]);
+    }
+    
+    return 0;
+}
+
+int soma_vetores(int* vet_a, int* vet_b, int* resultado, int n){
+    int i;
+    for (i = 0; i < n; i++){
+        resultado[i] = vet_a[i] + vet_b[i];
+    }
+    
+    return 0;
+}
+---------------------------
+Questao 20:
+  <resposta da questao 2>(não fiz);
+---------------------------
+Questao 21:
+  A) void f( ){
+  void *s;
+  s = malloc(50);
+  free(s);
+  }
+  resposta: não há vazamento, tudo alocado é liberado;
+
+  B) int f( ){
+  float *a;
+  return 0;
+  }
+  resposta: não há vazamentos, nada foi alocado então nada tem que ser liberado;
+
+  C) int f(char *data){
+  void *s;
+  s = malloc(50);
+  int size = strlen(data);
+  if (size > 50)
+  return(-1);
+  free(s);
+  return 0;
+  }
+  resposta: não há vazamentos, nada foi alocado então nada tem que ser liberado;
+
+  D) int *f(int n){
+  int *num = malloc(sizeof(int)*n);
+  return num;
+  }
+  int main(void){
+  int *num;
+  num = f(10);
+  free(num);
+  return 0;
+  }
+  resposta: há vazamento pois o free não alcança o malloc do s;
+
+  E) void f(int n){
+  char *m = malloc(10);
+  char *n = malloc(10);
+  free(m);
+  m = n;
+  free(m);
+  free(n);
+  }
+  resposta: ocorre um double free;
+---------------------------
+Questao 22:
+  As respostas vão ser 15 13 e 0 respectivamente, apos todos os or, xor e and, alem das deslocaçoes bit a bit;
+---------------------------
+Questao 23:
+  I - Verdadeiro;
+  II - Falso, pois no pior caso, em que o vetor desejado se encontra no ultimo termo da lista, a função dois será mais rápida;
+  III - Falsa, pois o processo é recursivo;
+
+  Portanto apenas a I está correta;
+---------------------------
+Questao 24:
+  <resposta da questao 1>
+---------------------------
+Questao 25:
+  <resposta da questao 2>
+---------------------------
